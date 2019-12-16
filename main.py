@@ -1,7 +1,9 @@
 import random
 import tensorflow as tf
-from tensorflow.compat.v1.keras.datasets.fashion_mnist import load_data
 import numpy as np
+from numpy.random import seed
+from tensorflow.compat.v1.keras.datasets.fashion_mnist import load_data
+
 
 (x_train, y_train), (x_test, y_test) = load_data()
 
@@ -13,6 +15,9 @@ n_hidden1 = 512
 n_hidden2 = 256
 n_hidden3 = 128
 n_output = 10
+
+seed(1)
+tf.random.set_random_seed(seed = 2)
 
 learning_rate = 1e-3
 n_iterations = 1000
@@ -68,8 +73,9 @@ for n in range (n_iterations):
     batch_x = []
     batch_y = []
     for i in range(batch_size):
-        rand = random.randint(0,n_train-1)
+        rand = random.randint(0, n_train-1)
         batch_x.append(np.reshape(np.array(x_train[rand]),(784)))
+        
         num = y_train[rand]
         array = [0] * 10
         array[num] = 1
